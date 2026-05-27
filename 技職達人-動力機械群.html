@@ -1503,8 +1503,8 @@
             <p id="career-desc"></p>
             <div class="course-checklist" id="course-checklist" aria-label="高職課程能力檢核"></div>
             <div class="career-actions">
-              <button class="career-next" id="career-next" type="button" disabled>完成能力檢核，前往職涯終點</button>
-              <span class="career-hint" id="career-hint">請先勾選你有信心學好的課程能力。</span>
+              <button class="career-next" id="career-next" type="button" disabled>完成至少 3 項能力檢核，前往職涯終點</button>
+              <span class="career-hint" id="career-hint">至少勾選 3 項能力才可前進；滿 5 項可取得最高薪資。</span>
             </div>
             <div class="career-result" id="career-result">
               <div class="career-end">
@@ -1576,8 +1576,8 @@
         courses: ["引擎原理", "底盤實習", "電子電路判讀", "車輛空調維修", "汽車修護丙級"],
         endpoint: "引擎總成技師／汽車修護技師",
         endpointDesc: "能獨立判斷故障原因、執行保養檢修，也能往服務顧問、檢測與研發測試方向延伸。",
-        salary: "月薪 3.2萬 - 5.5萬+",
-        note: "圖檔對應：汽車本業職涯末端月薪 3.2萬 - 5.5萬+；跨領域圖中汽車路徑長期年薪約 60萬 - 80萬。"
+        maxSalary: 60000,
+        baseNote: "圖檔對應：汽車本業職涯末端月薪 3.2萬 - 5.5萬+，本情境將 5.5萬+ 取整為最高月薪 6萬。"
       },
       {
         id: "ev",
@@ -1587,8 +1587,8 @@
         courses: ["基本電學", "電動車概論", "電控系統診斷", "高壓安全觀念", "電源管理模組"],
         endpoint: "電動車維修技師／電控診斷人員",
         endpointDesc: "把傳統修護能力升級成新能源車檢修能力，能判讀電源、馬達控制與車輛通訊訊號。",
-        salary: "月薪 3.2萬 - 5.5萬+",
-        note: "圖檔對應：電動車技師列在汽車本業轉型機會，參照產業多元職位月薪 3.2萬 - 5.5萬+，依證照與技術熟練度提升。"
+        maxSalary: 60000,
+        baseNote: "圖檔對應：電動車技師列在汽車本業轉型機會，參照月薪 3.2萬 - 5.5萬+，本情境取最高月薪 6萬。"
       },
       {
         id: "aviation",
@@ -1598,8 +1598,8 @@
         courses: ["引擎原理", "工具與量測", "電子電路", "英文維修術語", "維修紀錄流程"],
         endpoint: "飛機維修員／培訓生",
         endpointDesc: "以汽車科的機械與工具基礎，延伸到機體、動力與航電維修的專業工作。",
-        salary: "月薪 3.5萬 - 10萬+",
-        note: "圖檔對應：航空機械職涯末端月薪 3.5萬 - 10萬+；乙級與機型證照可另有加給。"
+        maxSalary: 100000,
+        baseNote: "圖檔對應：航空機械職涯末端月薪 3.5萬 - 10萬+，本情境取最高月薪 10萬。"
       },
       {
         id: "rail",
@@ -1609,8 +1609,8 @@
         courses: ["機械基礎", "電路判讀", "系統診斷", "車輛控制概念", "安全檢修流程"],
         endpoint: "系統控制專員／軌道維修人員",
         endpointDesc: "投入捷運、高鐵或台鐵的車輛維護與系統控制，重視穩定度、紀律與長期累積。",
-        salary: "月薪 3.9萬 - 6.2萬",
-        note: "圖檔對應：軌道運輸職涯末端月薪 3.9萬 - 6.2萬，系統控制專員可往區間上緣發展。"
+        maxSalary: 62000,
+        baseNote: "圖檔對應：軌道運輸職涯末端月薪 3.9萬 - 6.2萬，本情境取最高月薪 6.2萬。"
       },
       {
         id: "marine",
@@ -1620,8 +1620,8 @@
         courses: ["引擎與動力系統", "電機基礎", "液壓與傳動", "安全作業流程", "故障診斷紀錄"],
         endpoint: "輪機部船員／離岸風電維修技師",
         endpointDesc: "負責船舶機械操作與維修，或投入離岸風電設備檢修，適合願意面對高強度現場的學生。",
-        salary: "月薪 6萬 - 28萬",
-        note: "圖檔對應：輪機工程月薪 6萬 - 28萬；離岸風電維修技師約 5萬 - 8萬，長期年薪約 100萬 - 150萬。"
+        maxSalary: 280000,
+        baseNote: "圖檔對應：輪機工程月薪 6萬 - 28萬，本情境取最高月薪 28萬；離岸風電維修技師另約 5萬 - 8萬。"
       }
     ];
 
@@ -1672,16 +1672,47 @@
       });
     }
 
-    function allCoursesChecked() {
+    function checkedCourseCount() {
       const checks = Array.from(courseChecklist.querySelectorAll("input"));
-      return checks.length > 0 && checks.every((check) => check.checked);
+      return checks.filter((check) => check.checked).length;
+    }
+
+    function formatSalary(amount) {
+      const wan = amount / 10000;
+      return Number.isInteger(wan) ? `${wan}萬` : `${wan.toFixed(1)}萬`;
+    }
+
+    function currentSalaryInfo() {
+      const checked = checkedCourseCount();
+      const missing = Math.max(0, activeCareer.courses.length - checked);
+      const deduction = missing * 8000;
+      const salary = Math.max(0, activeCareer.maxSalary - deduction);
+      return { checked, missing, deduction, salary };
+    }
+
+    function updateSalaryCard() {
+      const info = currentSalaryInfo();
+      if (info.checked < 3) {
+        salaryRange.textContent = "尚未達標";
+        salaryNote.textContent = `${activeCareer.baseNote} 目前勾選 ${info.checked} / ${activeCareer.courses.length} 項能力，至少需要 3 項才能進入職涯終點。`;
+        salaryCard.setAttribute("aria-label", "翻開薪資水平區間，目前尚未達標");
+        return;
+      }
+
+      salaryRange.textContent = `月薪 ${formatSalary(info.salary)}`;
+      salaryNote.textContent = `${activeCareer.baseNote} 滿 5 項最高月薪 ${formatSalary(activeCareer.maxSalary)}；目前勾選 ${info.checked} / ${activeCareer.courses.length} 項能力，少 ${info.missing} 項，扣薪 ${formatSalary(info.deduction)}。`;
+      salaryCard.setAttribute("aria-label", `翻開薪資水平區間，目前估算月薪 ${formatSalary(info.salary)}`);
     }
 
     function updateCareerGate() {
-      const ready = allCoursesChecked();
+      const info = currentSalaryInfo();
+      const ready = info.checked >= 3;
       careerNext.disabled = !ready;
-      careerHint.textContent = ready ? "能力檢核完成，可以前往職涯終點。" : "請先勾選你有信心學好的課程能力。";
+      careerHint.textContent = ready
+        ? `已勾選 ${info.checked} 項，可以前往職涯終點；目前估算月薪 ${formatSalary(info.salary)}。`
+        : `目前勾選 ${info.checked} 項，至少需要 3 項才能前進。`;
       setCareerStep(ready ? "courses" : "start");
+      updateSalaryCard();
     }
 
     function renderCareer(career) {
@@ -1690,8 +1721,6 @@
       careerDesc.textContent = career.desc;
       careerEndTitle.textContent = career.endpoint;
       careerEndDesc.textContent = career.endpointDesc;
-      salaryRange.textContent = career.salary;
-      salaryNote.textContent = career.note;
       careerResult.classList.remove("open");
       salaryCard.classList.remove("flipped");
       salaryCard.setAttribute("aria-pressed", "false");
@@ -1706,9 +1735,21 @@
         const label = document.createElement("label");
         label.className = "course-check";
         label.innerHTML = `<input type="checkbox" value="${course}"><span>${course}</span>`;
-        label.querySelector("input").addEventListener("change", updateCareerGate);
+        const checkbox = label.querySelector("input");
+        label.addEventListener("click", (event) => {
+          event.preventDefault();
+          checkbox.checked = !checkbox.checked;
+          updateCareerGate();
+        });
+        checkbox.addEventListener("keydown", (event) => {
+          if (event.key === " ") {
+            event.preventDefault();
+            checkbox.checked = !checkbox.checked;
+            updateCareerGate();
+          }
+        });
         courseChecklist.append(label);
-        if (index === 0) label.querySelector("input").focus({ preventScroll: true });
+        if (index === 0) checkbox.focus({ preventScroll: true });
       });
       updateCareerGate();
     }
@@ -1724,10 +1765,11 @@
     });
 
     careerNext.addEventListener("click", () => {
-      if (!allCoursesChecked()) return;
+      if (checkedCourseCount() < 3) return;
       careerResult.classList.add("open");
       setCareerStep("career");
-      careerHint.textContent = "已抵達職涯終點，點擊薪資卡查看區間。";
+      const info = currentSalaryInfo();
+      careerHint.textContent = `已抵達職涯終點，點擊薪資卡查看 ${formatSalary(info.salary)} 的估算月薪。`;
       careerResult.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
 
