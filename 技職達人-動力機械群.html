@@ -1,0 +1,1798 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>技職達人-動力機械群｜東專汽車科</title>
+  <style>
+    :root {
+      --ink: #111820;
+      --text: #2e3d4b;
+      --muted: #6b7785;
+      --paper: #f5f5f7;
+      --white: #ffffff;
+      --line: #d9dee5;
+      --blue: #0b6f87;
+      --red: #c6472b;
+      --gold: #e2aa2b;
+      --green: #4b735b;
+      --shadow: 0 22px 58px rgba(17, 24, 32, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 22px;
+      min-height: 52px;
+      padding: 0 28px;
+      background: rgba(245, 245, 247, 0.82);
+      border-bottom: 1px solid rgba(17, 24, 32, 0.08);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(17, 24, 32, 0.12);
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(17, 24, 32, 0.12);
+    }
+
+    .brand-mark img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .brand-mark svg,
+    .icon svg,
+    .control svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: clamp(12px, 2vw, 28px);
+      color: #3d4a56;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .nav a {
+      padding: 16px 0;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      color: var(--blue);
+      border-color: var(--blue);
+    }
+
+    .top-action {
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .page {
+      display: grid;
+      gap: 12px;
+      padding: 12px;
+    }
+
+    .module {
+      position: relative;
+      min-height: 640px;
+      display: grid;
+      align-items: start;
+      justify-items: center;
+      overflow: hidden;
+      border-radius: 0;
+      background: var(--white);
+      text-align: center;
+    }
+
+    .module.full {
+      min-height: calc(100vh - 76px);
+    }
+
+    .module.dark {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .module.color {
+      background: #e9f1f2;
+    }
+
+    .module.gold {
+      background: #f4d78a;
+    }
+
+    .module.green {
+      background: #e8f0ea;
+    }
+
+    .software-module {
+      background:
+        radial-gradient(circle at 18% 18%, rgba(11, 111, 135, 0.16), transparent 34%),
+        radial-gradient(circle at 82% 12%, rgba(226, 170, 43, 0.2), transparent 32%),
+        linear-gradient(135deg, #f7fbff, #edf5f2);
+    }
+
+    .ev-module {
+      background:
+        radial-gradient(circle at 14% 12%, rgba(75, 115, 91, 0.22), transparent 34%),
+        radial-gradient(circle at 86% 18%, rgba(226, 170, 43, 0.24), transparent 32%),
+        linear-gradient(135deg, #f4fbf6, #e8f3f6);
+    }
+
+    .ev-module.dark {
+      background:
+        radial-gradient(circle at 18% 12%, rgba(131, 215, 230, 0.14), transparent 32%),
+        radial-gradient(circle at 78% 24%, rgba(226, 170, 43, 0.16), transparent 30%),
+        var(--ink);
+    }
+
+    .module-content {
+      position: relative;
+      z-index: 2;
+      width: min(920px, calc(100% - 34px));
+      display: grid;
+      gap: 13px;
+      justify-items: center;
+      padding: clamp(34px, 5vw, 70px) 0 20px;
+    }
+
+    .module.full .module-content {
+      padding-top: clamp(54px, 8vw, 96px);
+    }
+
+    .hero .module-content {
+      width: min(940px, calc(100% - 34px));
+      padding-left: clamp(18px, 3vw, 36px);
+      padding-right: clamp(18px, 3vw, 36px);
+      border-radius: 26px;
+      background: rgba(245, 245, 247, 0.48);
+      box-shadow: 0 20px 64px rgba(17, 24, 32, 0.16);
+      backdrop-filter: blur(14px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      width: fit-content;
+      min-height: 56px;
+      padding: 10px 24px 10px 10px;
+      border-radius: 999px;
+      background: var(--blue);
+      color: #fff;
+      font-size: clamp(19px, 2vw, 23px);
+      font-weight: 900;
+      line-height: 1;
+      box-shadow: 0 12px 28px rgba(11, 111, 135, 0.22);
+    }
+
+    .dark .eyebrow {
+      background: var(--gold);
+      color: var(--ink);
+      box-shadow: 0 12px 28px rgba(226, 170, 43, 0.2);
+    }
+
+    .hero .eyebrow {
+      background: var(--red);
+      color: #fff;
+      box-shadow: 0 12px 28px rgba(198, 71, 43, 0.22);
+    }
+
+    .eyebrow-num {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--blue);
+      font-family: Arial, sans-serif;
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .dark .eyebrow-num {
+      background: var(--ink);
+      color: var(--gold);
+    }
+
+    .hero .eyebrow-num {
+      color: var(--red);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 980px;
+      font-size: clamp(52px, 8vw, 112px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      max-width: 860px;
+      font-size: clamp(38px, 5vw, 72px);
+      line-height: 1.06;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font-size: clamp(27px, 3vw, 42px);
+      line-height: 1.12;
+    }
+
+    .lead {
+      max-width: 780px;
+      color: var(--text);
+      font-size: clamp(20px, 2.2vw, 30px);
+      line-height: 1.45;
+    }
+
+    .dark .lead,
+    .dark .caption,
+    .dark .stat-text {
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 20px;
+      margin-top: 6px;
+      color: var(--blue);
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .dark .links {
+      color: #83d7e6;
+    }
+
+    .link-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .link-pill::after {
+      content: ">";
+      font-size: 0.9em;
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        linear-gradient(180deg, rgba(245, 245, 247, 0.66) 0%, rgba(245, 245, 247, 0.28) 36%, rgba(17, 24, 32, 0.18) 70%, rgba(17, 24, 32, 0.62) 100%),
+        url("assets/gallery/department-building.jpg") center 30% / cover no-repeat;
+    }
+
+    .hero .module-content {
+      color: var(--ink);
+    }
+
+    .hero .lead {
+      color: #253342;
+    }
+
+    .module-visual {
+      position: relative;
+      width: 100%;
+      min-height: clamp(280px, 34vw, 430px);
+      margin-top: auto;
+      z-index: 1;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .visual-position {
+      background-image: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.08)), url("assets/gallery/diagnostic-computer.jpg");
+      background-position: center 28%;
+    }
+
+    .visual-practice {
+      min-height: clamp(310px, 38vw, 470px);
+      background-image: linear-gradient(180deg, transparent, rgba(17, 24, 32, 0.12)), url("assets/gallery/internship-01.jpg");
+    }
+
+    .visual-labs {
+      background-image: url("assets/gallery/internship-12.jpg");
+    }
+
+    .visual-partners {
+      background-image: url("assets/gallery/internship-10.jpg");
+    }
+
+    .visual-join {
+      background-image: linear-gradient(180deg, transparent, rgba(17, 24, 32, 0.1)), url("assets/gallery/competition-01.jpg");
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .wide {
+      grid-column: 1 / -1;
+    }
+
+    .stats {
+      width: min(930px, calc(100% - 34px));
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px auto 0;
+    }
+
+    .stat {
+      min-height: 150px;
+      display: grid;
+      align-content: center;
+      gap: 8px;
+      padding: 22px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.11);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .stat strong {
+      color: var(--gold);
+      font-size: clamp(42px, 5vw, 76px);
+      line-height: 1;
+    }
+
+    .stat-text {
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .photo-strip {
+      position: relative;
+      z-index: 1;
+      width: calc(100% - 44px);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: auto 22px 22px;
+    }
+
+    .photo-strip img {
+      width: 100%;
+      height: clamp(150px, 21vw, 270px);
+      object-fit: cover;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .text-stack {
+      width: min(860px, calc(100% - 34px));
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .mini-card {
+      min-height: 150px;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+      padding: 0 0 22px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(17, 24, 32, 0.08);
+      text-align: left;
+      overflow: hidden;
+    }
+
+    .mini-card strong {
+      color: var(--blue);
+      font-size: 21px;
+      padding: 0 22px;
+    }
+
+    .mini-card span {
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.45;
+      padding: 0 22px;
+    }
+
+    .mini-card img {
+      width: 100%;
+      height: clamp(190px, 18vw, 260px);
+      display: block;
+      object-fit: cover;
+      object-position: center;
+      margin-bottom: 12px;
+    }
+
+    .mini-card img.portrait {
+      object-position: center 38%;
+    }
+
+    .ev-showcase {
+      position: relative;
+      z-index: 1;
+      width: min(1120px, calc(100% - 34px));
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      gap: 16px;
+      margin: 16px auto 30px;
+      text-align: left;
+      align-items: stretch;
+    }
+
+    .ev-showcase.single {
+      grid-template-columns: 1fr;
+      width: min(980px, calc(100% - 34px));
+    }
+
+    .ev-photo-card {
+      position: relative;
+      min-height: clamp(250px, 34vw, 430px);
+      margin: 0;
+      overflow: hidden;
+      background: #dfe7e7;
+      box-shadow: var(--shadow);
+    }
+
+    .ev-photo-card img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .ev-photo-card.diagram img {
+      object-fit: contain;
+      background: #fff;
+      padding: clamp(10px, 2vw, 22px);
+    }
+
+    .ev-photo-card figcaption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 38px 18px 15px;
+      color: #fff;
+      font-weight: 900;
+      background: linear-gradient(transparent, rgba(17, 24, 32, 0.82));
+    }
+
+    .ev-points {
+      display: grid;
+      gap: 12px;
+      align-content: center;
+      padding: clamp(22px, 3vw, 34px);
+      background: rgba(255, 255, 255, 0.68);
+      border: 1px solid rgba(17, 24, 32, 0.08);
+    }
+
+    .dark .ev-points {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .ev-points strong {
+      color: var(--blue);
+      font-size: clamp(24px, 2.6vw, 34px);
+      line-height: 1.15;
+    }
+
+    .dark .ev-points strong {
+      color: var(--gold);
+    }
+
+    .ev-points span {
+      color: var(--text);
+      font-size: clamp(18px, 1.9vw, 23px);
+      line-height: 1.48;
+    }
+
+    .dark .ev-points span {
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .ev-image-grid {
+      position: relative;
+      z-index: 1;
+      width: min(1120px, calc(100% - 34px));
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 16px auto 32px;
+    }
+
+    .software-grid {
+      width: min(980px, calc(100% - 34px));
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .software-card {
+      min-height: 220px;
+      display: grid;
+      align-content: start;
+      gap: 12px;
+      padding: 24px;
+      border-radius: 22px;
+      text-align: left;
+      color: #fff;
+      box-shadow: 0 18px 42px rgba(17, 24, 32, 0.16);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .software-card::after {
+      content: "";
+      position: absolute;
+      right: -42px;
+      bottom: -42px;
+      width: 132px;
+      height: 132px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .software-card strong {
+      position: relative;
+      z-index: 1;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .software-card span {
+      position: relative;
+      z-index: 1;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    .software-card.blue {
+      background: linear-gradient(145deg, #0b6f87, #16455f);
+    }
+
+    .software-card.red {
+      background: linear-gradient(145deg, #c6472b, #7f2c28);
+    }
+
+    .software-card.green {
+      background: linear-gradient(145deg, #4b735b, #254c48);
+    }
+
+    .software-links {
+      margin-top: 18px;
+    }
+
+    .gallery-module {
+      min-height: auto;
+      padding-bottom: 12px;
+    }
+
+    .gallery {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      padding: 0 12px 12px;
+    }
+
+    .gallery figure {
+      position: relative;
+      min-height: 260px;
+      margin: 0;
+      overflow: hidden;
+      border-radius: 0;
+      background: #dce2e8;
+      cursor: zoom-in;
+    }
+
+    .gallery .tall {
+      min-height: 420px;
+      grid-row: span 2;
+    }
+
+    .gallery .wide-tile {
+      grid-column: span 2;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform 300ms ease;
+    }
+
+    .gallery img.focus-right {
+      object-position: 72% center;
+    }
+
+    .gallery figure:hover img {
+      transform: scale(1.035);
+    }
+
+    .gallery figure:focus-visible {
+      outline: 4px solid var(--gold);
+      outline-offset: 4px;
+    }
+
+    .gallery figcaption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 36px 16px 14px;
+      color: #fff;
+      font-weight: 900;
+      text-align: left;
+      background: linear-gradient(transparent, rgba(17, 24, 32, 0.82));
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: grid;
+      place-items: center;
+      padding: clamp(18px, 4vw, 54px);
+      background: rgba(8, 13, 18, 0.82);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms ease;
+      backdrop-filter: blur(12px);
+    }
+
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox figure {
+      width: min(1100px, 96vw);
+      max-height: 88vh;
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      transform: translateY(18px) scale(0.96);
+      transition: transform 220ms ease;
+    }
+
+    .lightbox.open figure {
+      transform: translateY(0) scale(1);
+    }
+
+    .lightbox img {
+      width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 14px;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.36);
+      background: #111820;
+    }
+
+    .lightbox figcaption {
+      color: #fff;
+      font-size: 20px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--ink);
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .course-map-module {
+      min-height: auto;
+      padding-bottom: 12px;
+    }
+
+    .course-map-frame {
+      width: calc(100% - 24px);
+      margin: 0 12px 12px;
+      padding: clamp(12px, 2vw, 20px);
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 18px 48px rgba(17, 24, 32, 0.1);
+      overflow-x: auto;
+    }
+
+    .course-map-frame img {
+      width: 100%;
+      min-width: 960px;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .career-module {
+      min-height: auto;
+      padding-bottom: 24px;
+      background:
+        linear-gradient(135deg, rgba(233, 241, 242, 0.92), rgba(255, 255, 255, 0.92)),
+        radial-gradient(circle at 12% 18%, rgba(226, 170, 43, 0.28), transparent 28%),
+        radial-gradient(circle at 88% 18%, rgba(11, 111, 135, 0.22), transparent 32%);
+    }
+
+    .career-board {
+      width: min(1180px, calc(100% - 24px));
+      display: grid;
+      grid-template-columns: 290px minmax(0, 1fr);
+      gap: 16px;
+      margin: 0 auto 12px;
+      text-align: left;
+    }
+
+    .career-selector,
+    .career-playground {
+      border: 1px solid rgba(17, 24, 32, 0.1);
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 18px 48px rgba(17, 24, 32, 0.1);
+    }
+
+    .career-selector {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      padding: 18px;
+    }
+
+    .career-choice {
+      width: 100%;
+      display: grid;
+      gap: 5px;
+      padding: 15px;
+      border: 1px solid rgba(17, 24, 32, 0.08);
+      border-radius: 14px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .career-choice:hover,
+    .career-choice.active {
+      transform: translateY(-2px);
+      border-color: var(--blue);
+      box-shadow: 0 14px 28px rgba(11, 111, 135, 0.14);
+    }
+
+    .career-choice strong {
+      color: var(--blue);
+      font-size: 19px;
+    }
+
+    .career-choice span {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .career-playground {
+      display: grid;
+      gap: 18px;
+      padding: clamp(18px, 3vw, 28px);
+      overflow: hidden;
+    }
+
+    .career-track {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(160px, 1fr));
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .career-node {
+      position: relative;
+      min-height: 118px;
+      display: grid;
+      align-content: center;
+      gap: 8px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #f5f8f8;
+      border: 1px solid rgba(17, 24, 32, 0.08);
+      text-align: center;
+    }
+
+    .career-node::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -18px;
+      width: 24px;
+      height: 3px;
+      background: rgba(11, 111, 135, 0.32);
+    }
+
+    .career-node:last-child::after {
+      display: none;
+    }
+
+    .career-node strong {
+      color: var(--ink);
+      font-size: 18px;
+    }
+
+    .career-node span {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .career-node.active {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+      box-shadow: 0 16px 34px rgba(11, 111, 135, 0.18);
+    }
+
+    .career-node.active strong,
+    .career-node.active span {
+      color: #fff;
+    }
+
+    .career-panel {
+      display: grid;
+      gap: 16px;
+    }
+
+    .career-panel h3 {
+      font-size: clamp(28px, 3.4vw, 48px);
+      color: var(--ink);
+    }
+
+    .career-panel p {
+      color: var(--text);
+      font-size: clamp(17px, 1.8vw, 22px);
+      line-height: 1.5;
+    }
+
+    .course-checklist {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .course-check {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      min-height: 64px;
+      padding: 14px;
+      border-radius: 14px;
+      background: #fff;
+      border: 1px solid rgba(17, 24, 32, 0.08);
+      color: var(--text);
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .course-check input {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--blue);
+    }
+
+    .career-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .career-next {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 20px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .career-next:disabled {
+      cursor: not-allowed;
+      background: #b8c4ca;
+      color: #fff;
+    }
+
+    .career-hint {
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .career-result {
+      display: none;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 320px);
+      gap: 14px;
+      align-items: stretch;
+      padding-top: 4px;
+    }
+
+    .career-result.open {
+      display: grid;
+    }
+
+    .career-end {
+      display: grid;
+      gap: 8px;
+      align-content: center;
+      padding: 20px;
+      border-radius: 18px;
+      background: #102536;
+      color: #fff;
+    }
+
+    .career-end strong {
+      color: var(--gold);
+      font-size: 24px;
+    }
+
+    .career-end span {
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 17px;
+      line-height: 1.45;
+    }
+
+    .salary-card {
+      min-height: 180px;
+      display: block;
+      border: 0;
+      border-radius: 22px;
+      background: transparent;
+      perspective: 1000px;
+      cursor: pointer;
+      font: inherit;
+      text-align: center;
+    }
+
+    .salary-card-inner {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 180px;
+    }
+
+    .salary-face {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      gap: 8px;
+      padding: 20px;
+      border-radius: 22px;
+      backface-visibility: hidden;
+      box-shadow: var(--shadow);
+      transition: opacity 260ms ease, transform 420ms ease;
+    }
+
+    .salary-front {
+      background: linear-gradient(145deg, #e2aa2b, #c6472b);
+      color: #fff;
+      font-size: 22px;
+      font-weight: 900;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .salary-back {
+      background: #fff;
+      color: var(--ink);
+      opacity: 0;
+      transform: scale(0.96);
+    }
+
+    .salary-card.flipped .salary-front {
+      opacity: 0 !important;
+      transform: scale(0.96) !important;
+      pointer-events: none;
+    }
+
+    .salary-card.flipped .salary-back {
+      opacity: 1 !important;
+      transform: scale(1) !important;
+    }
+
+    .salary-back strong {
+      color: var(--red);
+      font-size: clamp(26px, 3vw, 40px);
+      line-height: 1.1;
+    }
+
+    .salary-back span {
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .controls {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 30;
+      display: flex;
+      gap: 8px;
+      padding: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: 0 14px 38px rgba(17, 24, 32, 0.16);
+      backdrop-filter: blur(14px);
+    }
+
+    .control {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 999px;
+      background: var(--ink);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .control:hover {
+      background: var(--blue);
+    }
+
+    @media (max-width: 900px) {
+      .topbar {
+        grid-template-columns: 1fr auto;
+        padding: 0 16px;
+      }
+
+      .nav {
+        order: 3;
+        grid-column: 1 / -1;
+        justify-content: start;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .top-action {
+        display: none;
+      }
+
+      .module,
+      .module.full {
+        min-height: 620px;
+      }
+
+      .module-grid,
+      .stats,
+      .text-stack,
+      .software-grid,
+      .ev-showcase,
+      .ev-image-grid,
+      .career-board,
+      .career-track,
+      .course-checklist,
+      .career-result,
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .career-node::after {
+        top: auto;
+        right: 50%;
+        bottom: -14px;
+        width: 3px;
+        height: 18px;
+      }
+
+      .photo-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .photo-strip img:nth-child(n+2) {
+        display: none;
+      }
+
+      .gallery,
+      .page {
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+
+      .gallery .wide-tile,
+      .wide {
+        grid-column: auto;
+      }
+
+      .gallery figure,
+      .gallery .tall,
+      .ev-photo-card {
+        min-height: 300px;
+      }
+
+      .course-map-frame img {
+        width: 960px;
+      }
+
+      .controls {
+        display: none;
+      }
+    }
+
+    @media print {
+      .topbar,
+      .controls {
+        display: none;
+      }
+
+      .module {
+        break-after: page;
+        min-height: 100vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#hero" aria-label="回到首頁">
+      <span class="brand-mark" aria-hidden="true"><img src="assets/tjc-baby-1.jpg" alt=""></span>
+      <span>東專汽車科</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="頁面導覽">
+      <a href="#position">科系</a>
+      <a href="#wins">競賽</a>
+      <a href="#path">升學</a>
+      <a href="#practice">實習</a>
+      <a href="#labs">設備</a>
+      <a href="#partners">合作</a>
+      <a href="#green-ev-dev">綠能車</a>
+      <a href="#ev-teaching">電動車</a>
+      <a href="#industry-teaching">業師教學</a>
+      <a href="#software">自學軟體</a>
+      <a href="#course-map">課程地圖</a>
+      <a href="#career-game">職涯路徑</a>
+      <a href="#join">加入</a>
+    </nav>
+    <a class="top-action" href="#join">了解更多</a>
+  </header>
+
+  <main class="page">
+    <section class="module full hero" id="hero">
+      <div class="hero-photo" aria-hidden="true"></div>
+      <div class="module-content">
+        <span class="eyebrow"><span class="eyebrow-num">01</span>首頁｜技職達人</span>
+        <h1>從車輛現場，開出自己的專業路。</h1>
+        <p class="lead">台東專科學校附設高職部汽車科，把引擎、電控、板噴、實習與競賽訓練做成一條清楚的技職路徑。</p>
+        <div class="links">
+          <a class="link-pill" href="#practice">看實習現場</a>
+          <a class="link-pill" href="#wins">看競賽成果</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="module-grid">
+      <section class="module color" id="position">
+        <div class="module-content">
+          <span class="eyebrow"><span class="eyebrow-num">02</span>科系定位</span>
+          <h2>不只修車，而是診斷一套會移動的系統。</h2>
+          <p class="lead">從動力、底盤、電系到資料判讀，學生學會用工具、儀器與流程找出真正原因。</p>
+          <div class="links"><a class="link-pill" href="#labs">看設備</a></div>
+        </div>
+        <div class="module-visual visual-position" aria-hidden="true"></div>
+      </section>
+
+      <section class="module green" id="teachers">
+        <div class="module-content">
+          <span class="eyebrow"><span class="eyebrow-num">03</span>學生目標</span>
+          <h2>三年一貫的學習節奏，讓每個階段都有清楚任務。</h2>
+          <div class="text-stack">
+            <div class="mini-card">
+              <img class="portrait" src="assets/gallery/grade-1-motorcycle.jpg" alt="一年級學生進行機車修護技能練習">
+              <strong>一年級</strong>
+              <span>以機車修護丙級為目標，建立工具使用、基本拆裝與安全觀念。</span>
+            </div>
+            <div class="mini-card">
+              <img src="assets/gallery/grade-2-auto.jpg" alt="二年級學生進行汽車修護丙級檢定練習">
+              <strong>二年級</strong>
+              <span>以汽車修護丙級為目標，強化引擎、底盤、電系與檢修流程。</span>
+            </div>
+            <div class="mini-card">
+              <img class="portrait" src="assets/gallery/grade-3-project.jpg" alt="三年級學生進行專題實作討論">
+              <strong>三年級</strong>
+              <span>完成專題實作，整合診斷、設計、製作、紀錄與成果發表能力。</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="module dark wide" id="wins">
+      <div class="module-content">
+        <span class="eyebrow"><span class="eyebrow-num">04</span>亮點成果</span>
+        <h2>競賽與專題，讓能力被看見。</h2>
+        <p class="lead">學生從練習、修正、再練習中累積穩定度，也把成果轉化成升學與職涯的證明。</p>
+        <div class="stats">
+          <div class="stat"><strong>54</strong><span class="stat-text">全國技能競賽南區分區賽汽車板金第3名</span></div>
+          <div class="stat"><strong>53</strong><span class="stat-text">汽車板金第1名、汽車噴漆第5名</span></div>
+          <div class="stat"><strong>4</strong><span class="stat-text">動力機械群科專題競賽多次獲獎</span></div>
+        </div>
+      </div>
+      <div class="photo-strip" aria-label="競賽練習照片">
+        <img src="assets/gallery/competition-01.jpg" alt="學生進行競賽練習">
+        <img src="assets/gallery/competition-02.jpg" alt="學生進行車輛板噴實作">
+        <img src="assets/gallery/competition-03.jpg" alt="學生與成果展示欄">
+      </div>
+    </section>
+
+    <section class="module-grid">
+      <section class="module" id="path">
+        <div class="module-content">
+          <span class="eyebrow"><span class="eyebrow-num">05</span>升學就業</span>
+          <h2>把作品、證照與實習紀錄，整理成自己的能力檔案。</h2>
+          <p class="lead">參考資料列出錄取高雄科技大學、虎尾科技大學、海軍軍官學校等方向，也銜接 TOYOTA 東部汽車等車廠體系。</p>
+          <div class="links"><a class="link-pill" href="#practice">看場域學習</a></div>
+        </div>
+      </section>
+
+      <section class="module dark" id="practice">
+        <div class="module-content">
+          <span class="eyebrow"><span class="eyebrow-num">06</span>業界實習</span>
+          <h2>走進車廠，把課堂變成現場判斷。</h2>
+          <p class="lead">實習合作包含 TOYOTA 東部汽車、NISSAN 連誠汽車、匯豐汽車、福斯國源汽車等。</p>
+          <div class="links"><a class="link-pill" href="#gallery">看照片牆</a></div>
+        </div>
+        <div class="module-visual visual-practice" aria-hidden="true"></div>
+      </section>
+    </section>
+
+    <section class="module gallery-module" id="gallery">
+      <div class="module-content">
+        <span class="eyebrow"><span class="eyebrow-num">07</span>現場照片</span>
+        <h2>實習與練習，不是口號，是每天看得見的手感。</h2>
+      </div>
+      <div class="gallery" aria-label="業界實習與競賽練習照片牆">
+        <figure class="wide-tile"><img src="assets/gallery/internship-01.jpg" alt="學生在車輛引擎室旁學習"><figcaption>車廠現場學習</figcaption></figure>
+        <figure><img src="assets/gallery/internship-02.jpg" alt="學生觀察車輛維修作業"><figcaption>實務觀察</figcaption></figure>
+        <figure><img src="assets/gallery/internship-04.jpg" alt="學生進行車身作業練習"><figcaption>保養檢修流程</figcaption></figure>
+        <figure class="tall"><img class="focus-right" src="assets/gallery/internship-05.jpg" alt="學生與板件展示"><figcaption>板件實作成果</figcaption></figure>
+        <figure><img src="assets/gallery/internship-06.jpg" alt="學生進行板噴操作"><figcaption>板噴操作</figcaption></figure>
+        <figure class="wide-tile"><img src="assets/gallery/internship-07.jpg" alt="學生在舉升車輛下方作業"><figcaption>底盤檢查</figcaption></figure>
+        <figure><img src="assets/gallery/internship-08.jpg" alt="學生穿戴防護裝備作業"><figcaption>安全防護</figcaption></figure>
+        <figure><img src="assets/gallery/internship-09.jpg" alt="學生進行噴塗練習"><figcaption>塗裝練習</figcaption></figure>
+        <figure class="wide-tile"><img src="assets/gallery/internship-11.jpg" alt="學生拆解車輛零件"><figcaption>零件拆裝</figcaption></figure>
+        <figure><img src="assets/gallery/internship-13.jpg" alt="學生業界實習合影"><figcaption>企業交流</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="module-grid">
+      <section class="module color" id="labs">
+        <div class="module-content">
+          <span class="eyebrow"><span class="eyebrow-num">08</span>檢定設備</span>
+          <h2>讓學生從基礎練習，到專業檢定都有場地支撐。</h2>
+          <p class="lead">汽車修護丙級、機車修護丙級、汽車修護乙級檢定場地，搭配 3D 定位、示波器、診斷儀與板噴設備。</p>
+        </div>
+        <div class="module-visual visual-labs" aria-hidden="true"></div>
+      </section>
+
+      <section class="module gold" id="partners">
+        <div class="module-content">
+          <span class="eyebrow"><span class="eyebrow-num">09</span>企業合作</span>
+          <h2>企業資源進校園，學生更早理解職場標準。</h2>
+          <p class="lead">國瑞、和泰、中華汽車等提供車輛、工具與講座，並透過業師協同教學補上現場經驗。</p>
+        </div>
+        <div class="module-visual visual-partners" aria-hidden="true"></div>
+      </section>
+    </section>
+
+    <section class="module ev-module" id="green-ev-dev">
+      <div class="module-content">
+        <span class="eyebrow"><span class="eyebrow-num">10</span>綠能車課程開發</span>
+        <h2>從三電系統開始，看懂電動車如何被驅動。</h2>
+        <p class="lead">電動車課程先建立「電池、電機、電控」三電架構，讓學生理解能量如何儲存、輸出、控制，最後轉換成車輛行駛與診斷判斷。</p>
+      </div>
+      <div class="ev-showcase single">
+        <figure class="ev-photo-card diagram">
+          <img src="assets/gallery/ev-module-diagram.jpg" alt="電動車模組示意圖，呈現電池、電機與電控系統架構">
+          <figcaption>電動車模組示意圖</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="module green" id="green-ev-workshop">
+      <div class="module-content">
+        <span class="eyebrow"><span class="eyebrow-num">11</span>課程模組討論</span>
+        <h2>邀請 TOYOTA 技師共同參與，把產業經驗轉成教學模組。</h2>
+        <p class="lead">課程開發重視「現場任務化」：從業界常見檢修流程出發，拆解成學生能操作、能討論、能驗證的學習活動。</p>
+      </div>
+      <div class="ev-image-grid">
+        <figure class="ev-photo-card">
+          <img src="assets/gallery/ev-course-discussion-01.jpg" alt="教師與 TOYOTA 技師討論油電車課程模組">
+          <figcaption>油電車課程討論</figcaption>
+        </figure>
+        <figure class="ev-photo-card">
+          <img src="assets/gallery/ev-course-discussion-02.jpg" alt="業師協同參與油電車課程模組開發討論">
+          <figcaption>業師協同開發</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="module ev-module dark" id="ev-teaching">
+      <div class="module-content">
+        <span class="eyebrow"><span class="eyebrow-num">12</span>電動車教學</span>
+        <h2>從電動機車到油電車，引導學生建立新能源車基礎概念。</h2>
+        <p class="lead">課程以實車與示意圖搭配講解，讓學生先看見車輛構造，再理解高壓電源、引擎室配置與安全檢查的關聯。</p>
+      </div>
+      <div class="ev-image-grid">
+        <figure class="ev-photo-card">
+          <img src="assets/gallery/ev-scooter.jpg" alt="電動機車作為新能源車教學教材">
+          <figcaption>電動機車</figcaption>
+        </figure>
+        <figure class="ev-photo-card">
+          <img src="assets/gallery/hybrid-engine-room.jpg" alt="油電車引擎室示意圖教學">
+          <figcaption>油電車引擎室示意圖</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="module color" id="ev-lecture">
+      <div class="module-content">
+        <span class="eyebrow"><span class="eyebrow-num">13</span>課程試行講座</span>
+        <h2>把模組帶進課堂，讓學生練習判讀與檢測。</h2>
+        <p class="lead">試行課程聚焦電源管理與動力電池繼電器檢測，讓學生從講解、觀察到操作，逐步建立新能源車檢修的安全流程與判斷邏輯。</p>
+      </div>
+      <div class="ev-image-grid">
+        <figure class="ev-photo-card">
+          <img src="assets/gallery/hybrid-power-management.jpg" alt="油電車電源管理模組講解課程">
+          <figcaption>電源管理模組講解</figcaption>
+        </figure>
+        <figure class="ev-photo-card">
+          <img src="assets/gallery/hybrid-battery-relay.jpg" alt="油電車動力電池繼電器模組檢測課程">
+          <figcaption>動力電池繼電器檢測</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="module gallery-module" id="industry-teaching">
+      <div class="module-content">
+        <span class="eyebrow"><span class="eyebrow-num">14</span>業師教學</span>
+        <h2>企業合作活動，把業界經驗帶進課堂。</h2>
+        <p class="lead">透過實車講座、技術示範與現場交流，學生能在校內接觸產業正在使用的工具、流程與標準。</p>
+      </div>
+      <div class="gallery" aria-label="企業合作業師教學活動照片牆">
+        <figure class="wide-tile"><img src="assets/gallery/industry-teacher-01.jpg" alt="MG 汽車進入校園作為業師教學實車教材"><figcaption>MG 實車展示</figcaption></figure>
+        <figure><img src="assets/gallery/industry-teacher-02.jpg" alt="業師進行 MG 汽車技術講座"><figcaption>MG 汽車講座</figcaption></figure>
+        <figure><img src="assets/gallery/industry-teacher-03.jpg" alt="學生參與 MG 汽車講座與技術交流"><figcaption>MG 技術交流</figcaption></figure>
+        <figure class="tall"><img src="assets/gallery/industry-teacher-04.jpg" alt="業師示範汽車噴漆操作流程"><figcaption>噴漆教學</figcaption></figure>
+        <figure class="wide-tile"><img src="assets/gallery/industry-teacher-05.jpg" alt="特斯拉實車講座現場"><figcaption>特斯拉實車講座</figcaption></figure>
+        <figure><img src="assets/gallery/industry-teacher-06.jpg" alt="業師介紹特斯拉車輛技術與構造"><figcaption>電動車技術解析</figcaption></figure>
+        <figure><img src="assets/gallery/industry-teacher-07.jpg" alt="業師示範車身研磨教學"><figcaption>研磨教學</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="module software-module" id="software">
+      <div class="module-content">
+        <span class="eyebrow"><span class="eyebrow-num">15</span>自學軟體</span>
+        <h2>汽車電路檢診教學網，把抽象電路變成可操作的練習場。</h2>
+        <p class="lead">本科教師把汽車電路檢診與物理概念做成可互動、可重複練習的自主學習網站。學生可以先在線上建立概念，再回到實習場用工具驗證，讓「看懂原理」和「做得出來」接在一起。</p>
+        <div class="software-grid">
+          <div class="software-card blue"><strong>電路檢修</strong><span>把汽車電路與故障判斷拆成一步一步的任務，訓練學生從現象推回可能原因。</span></div>
+          <div class="software-card red"><strong>AI 互動回饋</strong><span>透過互動式題目與情境練習，學生答錯也能回到線索，重新思考下一個檢查點。</span></div>
+          <div class="software-card green"><strong>課後自學</strong><span>延伸到物理自主學習網站，讓學生用自己的節奏補強觀念、反覆練習。</span></div>
+        </div>
+        <div class="links software-links">
+          <a class="link-pill" href="https://dve.ntc.edu.tw/p/404-1027-30030.php?Lang=zh-tw" target="_blank" rel="noopener">前往教學網</a>
+          <a class="link-pill" href="https://kjyang0817-jpg.github.io/physics-ch13-site/" target="_blank" rel="noopener">物理自主學習</a>
+          <a class="link-pill" href="https://ntccar01.github.io/CH5_EV_Motor_Learning_Website/" target="_blank" rel="noopener">電動車學習網站</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="module course-map-module" id="course-map">
+      <div class="module-content">
+        <span class="eyebrow"><span class="eyebrow-num">16</span>課程地圖</span>
+        <h2>三年課程一張圖看懂。</h2>
+        <p class="lead">從一年級的基礎修護能力，到二年級的汽車檢修，再到三年級的專題實作與進階選修，學生可以清楚看見每個階段要學什麼、能力如何逐步累積。</p>
+      </div>
+      <div class="course-map-frame" aria-label="115課綱汽車科課程地圖">
+        <img src="assets/gallery/course-map.png" alt="115課綱汽車科課程地圖，呈現一到三年級部定必修、校訂必修、校訂選修與產業進路">
+      </div>
+    </section>
+
+    <section class="module career-module" id="career-game">
+      <div class="module-content">
+        <span class="eyebrow"><span class="eyebrow-num">17</span>職涯選擇</span>
+        <h2>選一條路，檢核自己的課程能力，再翻開未來薪資卡。</h2>
+        <p class="lead">依據汽車科跨領域職涯發展圖解與職涯心智圖，把高職階段的課程能力接到未來工作選擇。</p>
+      </div>
+      <div class="career-board" aria-label="互動式職涯選擇路徑圖">
+        <div class="career-selector" id="career-selector" aria-label="職涯路線選擇"></div>
+        <div class="career-playground">
+          <div class="career-track" aria-label="職涯闖關路徑">
+            <div class="career-node active" data-career-step="start"><strong>起點</strong><span>國中畢業，選擇高職汽車科</span></div>
+            <div class="career-node" data-career-step="courses"><strong>能力檢核</strong><span>勾選高職階段課程能力</span></div>
+            <div class="career-node" data-career-step="career"><strong>職涯終點</strong><span>解鎖工作方向與任務</span></div>
+            <div class="career-node" data-career-step="salary"><strong>薪資卡</strong><span>點擊翻開薪資水平</span></div>
+          </div>
+          <div class="career-panel">
+            <h3 id="career-title"></h3>
+            <p id="career-desc"></p>
+            <div class="course-checklist" id="course-checklist" aria-label="高職課程能力檢核"></div>
+            <div class="career-actions">
+              <button class="career-next" id="career-next" type="button" disabled>完成能力檢核，前往職涯終點</button>
+              <span class="career-hint" id="career-hint">請先勾選你有信心學好的課程能力。</span>
+            </div>
+            <div class="career-result" id="career-result">
+              <div class="career-end">
+                <strong id="career-end-title"></strong>
+                <span id="career-end-desc"></span>
+              </div>
+              <button class="salary-card" id="salary-card" type="button" aria-label="翻開薪資水平區間" aria-pressed="false">
+                <span class="salary-card-inner">
+                  <span class="salary-face salary-front">薪資水平區間<br>點我翻開</span>
+                  <span class="salary-face salary-back">
+                    <strong id="salary-range"></strong>
+                    <span id="salary-note"></span>
+                  </span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="module dark full" id="join">
+      <div class="module-content">
+        <span class="eyebrow"><span class="eyebrow-num">18</span>加入我們</span>
+        <h2>選擇汽車科，就是選擇一條能看見自己進步的技職道路。</h2>
+        <p class="lead">你會從工具、零件、儀器與車輛開始，學會拆解問題、驗證答案，最後把技術變成作品、證照、實習表現與未來工作能力。</p>
+        <div class="links">
+          <a class="link-pill" href="#hero">回到首頁</a>
+          <a class="link-pill" href="#gallery">再看照片</a>
+        </div>
+      </div>
+      <div class="module-visual visual-join" aria-hidden="true"></div>
+    </section>
+  </main>
+
+  <nav class="controls" aria-label="頁面控制">
+    <button class="control" type="button" id="prev" aria-label="上一頁" title="上一頁">
+      <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <button class="control" type="button" id="next" aria-label="下一頁" title="下一頁">
+      <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+  </nav>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="照片放大檢視">
+    <button class="lightbox-close" type="button" aria-label="關閉照片">×</button>
+    <figure>
+      <img src="" alt="">
+      <figcaption></figcaption>
+    </figure>
+  </div>
+
+  <script>
+    const sections = Array.from(document.querySelectorAll("section[id]"));
+    const navLinks = Array.from(document.querySelectorAll(".nav a"));
+    const scrollTargets = Array.from(document.querySelectorAll(".module"));
+    const lightbox = document.querySelector("#lightbox");
+    const lightboxImage = lightbox.querySelector("img");
+    const lightboxCaption = lightbox.querySelector("figcaption");
+    const lightboxClose = lightbox.querySelector(".lightbox-close");
+    let currentIndex = 0;
+
+    const careerData = [
+      {
+        id: "auto",
+        title: "汽車本業發展",
+        tag: "穩健成長",
+        desc: "從汽車修護技術員、服務接待到車輛研發測試，先把引擎、底盤、電路與檢修流程練穩，是最直接也最扎實的職涯起點。",
+        courses: ["引擎原理", "底盤實習", "電子電路判讀", "車輛空調維修", "汽車修護丙級"],
+        endpoint: "引擎總成技師／汽車修護技師",
+        endpointDesc: "能獨立判斷故障原因、執行保養檢修，也能往服務顧問、檢測與研發測試方向延伸。",
+        salary: "月薪 3.2萬 - 5.5萬+",
+        note: "圖檔對應：汽車本業職涯末端月薪 3.2萬 - 5.5萬+；跨領域圖中汽車路徑長期年薪約 60萬 - 80萬。"
+      },
+      {
+        id: "ev",
+        title: "電動車技師",
+        tag: "新能源轉型",
+        desc: "隨著電動車與油電車普及，懂電控、數位監控與高壓安全的汽車科學生，會成為維修現場很需要的人才。",
+        courses: ["基本電學", "電動車概論", "電控系統診斷", "高壓安全觀念", "電源管理模組"],
+        endpoint: "電動車維修技師／電控診斷人員",
+        endpointDesc: "把傳統修護能力升級成新能源車檢修能力，能判讀電源、馬達控制與車輛通訊訊號。",
+        salary: "月薪 3.2萬 - 5.5萬+",
+        note: "圖檔對應：電動車技師列在汽車本業轉型機會，參照產業多元職位月薪 3.2萬 - 5.5萬+，依證照與技術熟練度提升。"
+      },
+      {
+        id: "aviation",
+        title: "航空機械維修",
+        tag: "專業精證",
+        desc: "汽車科的工具操作、機械基礎與電控判讀，可以銜接航空機械維修；若願意累積證照，職涯天花板會明顯提高。",
+        courses: ["引擎原理", "工具與量測", "電子電路", "英文維修術語", "維修紀錄流程"],
+        endpoint: "飛機維修員／培訓生",
+        endpointDesc: "以汽車科的機械與工具基礎，延伸到機體、動力與航電維修的專業工作。",
+        salary: "月薪 3.5萬 - 10萬+",
+        note: "圖檔對應：航空機械職涯末端月薪 3.5萬 - 10萬+；乙級與機型證照可另有加給。"
+      },
+      {
+        id: "rail",
+        title: "軌道運輸",
+        tag: "智慧穩定",
+        desc: "捷運、高鐵與台鐵需要懂機電、系統診斷與安全流程的人才，汽車科的檢修邏輯可轉化為軌道維護能力。",
+        courses: ["機械基礎", "電路判讀", "系統診斷", "車輛控制概念", "安全檢修流程"],
+        endpoint: "系統控制專員／軌道維修人員",
+        endpointDesc: "投入捷運、高鐵或台鐵的車輛維護與系統控制，重視穩定度、紀律與長期累積。",
+        salary: "月薪 3.9萬 - 6.2萬",
+        note: "圖檔對應：軌道運輸職涯末端月薪 3.9萬 - 6.2萬，系統控制專員可往區間上緣發展。"
+      },
+      {
+        id: "marine",
+        title: "輪機工程與離岸風電",
+        tag: "高薪挑戰",
+        desc: "大型機械、發電與維修判斷能力，可延伸到船舶輪機與離岸風電。這條路挑戰高，但薪資成長也最有想像空間。",
+        courses: ["引擎與動力系統", "電機基礎", "液壓與傳動", "安全作業流程", "故障診斷紀錄"],
+        endpoint: "輪機部船員／離岸風電維修技師",
+        endpointDesc: "負責船舶機械操作與維修，或投入離岸風電設備檢修，適合願意面對高強度現場的學生。",
+        salary: "月薪 6萬 - 28萬",
+        note: "圖檔對應：輪機工程月薪 6萬 - 28萬；離岸風電維修技師約 5萬 - 8萬，長期年薪約 100萬 - 150萬。"
+      }
+    ];
+
+    function scrollToModule(index) {
+      currentIndex = Math.max(0, Math.min(index, scrollTargets.length - 1));
+      scrollTargets[currentIndex].scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (!visible) return;
+
+      currentIndex = scrollTargets.indexOf(visible.target);
+      navLinks.forEach((link) => {
+        link.classList.toggle("active", link.getAttribute("href") === `#${visible.target.id}`);
+      });
+    }, { threshold: [0.42, 0.65] });
+
+    scrollTargets.forEach((section) => observer.observe(section));
+
+    document.querySelector("#prev").addEventListener("click", () => scrollToModule(currentIndex - 1));
+    document.querySelector("#next").addEventListener("click", () => scrollToModule(currentIndex + 1));
+
+    const careerSelector = document.querySelector("#career-selector");
+    const careerTitle = document.querySelector("#career-title");
+    const careerDesc = document.querySelector("#career-desc");
+    const courseChecklist = document.querySelector("#course-checklist");
+    const careerNext = document.querySelector("#career-next");
+    const careerHint = document.querySelector("#career-hint");
+    const careerResult = document.querySelector("#career-result");
+    const careerEndTitle = document.querySelector("#career-end-title");
+    const careerEndDesc = document.querySelector("#career-end-desc");
+    const salaryCard = document.querySelector("#salary-card");
+    const salaryRange = document.querySelector("#salary-range");
+    const salaryNote = document.querySelector("#salary-note");
+    const careerNodes = Array.from(document.querySelectorAll("[data-career-step]"));
+    let activeCareer = careerData[0];
+
+    function setCareerStep(step) {
+      const order = ["start", "courses", "career", "salary"];
+      const activeIndex = order.indexOf(step);
+      careerNodes.forEach((node) => {
+        const nodeIndex = order.indexOf(node.dataset.careerStep);
+        node.classList.toggle("active", nodeIndex <= activeIndex);
+      });
+    }
+
+    function allCoursesChecked() {
+      const checks = Array.from(courseChecklist.querySelectorAll("input"));
+      return checks.length > 0 && checks.every((check) => check.checked);
+    }
+
+    function updateCareerGate() {
+      const ready = allCoursesChecked();
+      careerNext.disabled = !ready;
+      careerHint.textContent = ready ? "能力檢核完成，可以前往職涯終點。" : "請先勾選你有信心學好的課程能力。";
+      setCareerStep(ready ? "courses" : "start");
+    }
+
+    function renderCareer(career) {
+      activeCareer = career;
+      careerTitle.textContent = career.title;
+      careerDesc.textContent = career.desc;
+      careerEndTitle.textContent = career.endpoint;
+      careerEndDesc.textContent = career.endpointDesc;
+      salaryRange.textContent = career.salary;
+      salaryNote.textContent = career.note;
+      careerResult.classList.remove("open");
+      salaryCard.classList.remove("flipped");
+      salaryCard.setAttribute("aria-pressed", "false");
+      setCareerStep("start");
+
+      careerSelector.querySelectorAll(".career-choice").forEach((button) => {
+        button.classList.toggle("active", button.dataset.career === career.id);
+      });
+
+      courseChecklist.innerHTML = "";
+      career.courses.forEach((course, index) => {
+        const label = document.createElement("label");
+        label.className = "course-check";
+        label.innerHTML = `<input type="checkbox" value="${course}"><span>${course}</span>`;
+        label.querySelector("input").addEventListener("change", updateCareerGate);
+        courseChecklist.append(label);
+        if (index === 0) label.querySelector("input").focus({ preventScroll: true });
+      });
+      updateCareerGate();
+    }
+
+    careerData.forEach((career) => {
+      const button = document.createElement("button");
+      button.className = "career-choice";
+      button.type = "button";
+      button.dataset.career = career.id;
+      button.innerHTML = `<strong>${career.title}</strong><span>${career.tag}</span>`;
+      button.addEventListener("click", () => renderCareer(career));
+      careerSelector.append(button);
+    });
+
+    careerNext.addEventListener("click", () => {
+      if (!allCoursesChecked()) return;
+      careerResult.classList.add("open");
+      setCareerStep("career");
+      careerHint.textContent = "已抵達職涯終點，點擊薪資卡查看區間。";
+      careerResult.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    salaryCard.addEventListener("click", () => {
+      salaryCard.classList.toggle("flipped");
+      salaryCard.setAttribute("aria-pressed", salaryCard.classList.contains("flipped") ? "true" : "false");
+      setCareerStep("salary");
+    });
+
+    renderCareer(activeCareer);
+
+    function openLightbox(figure) {
+      const image = figure.querySelector("img");
+      const caption = figure.querySelector("figcaption")?.textContent || image.alt;
+      lightboxImage.src = image.src;
+      lightboxImage.alt = image.alt;
+      lightboxCaption.textContent = caption;
+      lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden", "false");
+      lightboxClose.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      lightboxImage.src = "";
+    }
+
+    document.querySelectorAll(".gallery figure").forEach((figure) => {
+      figure.setAttribute("tabindex", "0");
+      figure.setAttribute("role", "button");
+      figure.setAttribute("aria-label", `放大檢視：${figure.querySelector("figcaption")?.textContent || "照片"}`);
+      figure.addEventListener("click", () => openLightbox(figure));
+      figure.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openLightbox(figure);
+        }
+      });
+    });
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+
+    lightboxClose.addEventListener("click", closeLightbox);
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && lightbox.classList.contains("open")) {
+        closeLightbox();
+        return;
+      }
+
+      if (lightbox.classList.contains("open")) return;
+
+      if (["ArrowDown", "ArrowRight", "PageDown", " "].includes(event.key)) {
+        event.preventDefault();
+        scrollToModule(currentIndex + 1);
+      }
+
+      if (["ArrowUp", "ArrowLeft", "PageUp"].includes(event.key)) {
+        event.preventDefault();
+        scrollToModule(currentIndex - 1);
+      }
+    });
+  </script>
+</body>
+</html>

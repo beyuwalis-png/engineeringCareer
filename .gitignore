@@ -1,0 +1,20 @@
+.DS_Store
+*.pptx
+
+# Source/reference media folders are kept locally; the website uses optimized assets/.
+專題製作競賽/
+東大講座/
+業師教學/
+業界實習相片/
+競賽相片/
+電動車課程/
+
+# Original source images kept locally.
+115課綱課程地圖.png
+實習實作.jpg
+東專寶寶1.jpg
+機丙技能輔導.jpg
+汽丙檢定.jpg
+汽車科跨領域職涯發展圖解.png
+科館.png
+高職汽車科職涯心智圖.png
