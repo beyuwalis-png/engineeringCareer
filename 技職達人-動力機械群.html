@@ -1056,76 +1056,83 @@
       line-height: 1.45;
     }
 
-    .salary-card {
-      min-height: 180px;
-      display: block;
-      border: 0;
+    .salary-chart {
+      min-height: 260px;
+      display: grid;
+      gap: 14px;
+      padding: 20px;
       border-radius: 22px;
-      background: transparent;
-      perspective: 1000px;
-      cursor: pointer;
-      font: inherit;
+      background: #fff;
+      box-shadow: var(--shadow);
       text-align: center;
     }
 
-    .salary-card-inner {
-      position: relative;
-      display: block;
-      width: 100%;
-      height: 100%;
-      min-height: 180px;
-    }
-
-    .salary-face {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      gap: 8px;
-      padding: 20px;
-      border-radius: 22px;
-      backface-visibility: hidden;
-      box-shadow: var(--shadow);
-      transition: opacity 260ms ease, transform 420ms ease;
-    }
-
-    .salary-front {
-      background: linear-gradient(145deg, #e2aa2b, #c6472b);
-      color: #fff;
-      font-size: 22px;
-      font-weight: 900;
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .salary-back {
-      background: #fff;
+    .salary-chart-title {
       color: var(--ink);
-      opacity: 0;
-      transform: scale(0.96);
+      font-size: 20px;
+      font-weight: 900;
     }
 
-    .salary-card.flipped .salary-front {
-      opacity: 0 !important;
-      transform: scale(0.96) !important;
-      pointer-events: none;
+    .salary-bars {
+      height: 170px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      align-items: end;
     }
 
-    .salary-card.flipped .salary-back {
-      opacity: 1 !important;
-      transform: scale(1) !important;
+    .salary-bar-item {
+      height: 100%;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      gap: 8px;
+      align-items: end;
     }
 
-    .salary-back strong {
-      color: var(--red);
-      font-size: clamp(26px, 3vw, 40px);
-      line-height: 1.1;
+    .salary-bar-track {
+      height: 100%;
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      border-radius: 14px;
+      background: #edf3f5;
+      overflow: hidden;
     }
 
-    .salary-back span {
+    .salary-bar {
+      width: min(72px, 76%);
+      min-height: 12px;
+      border-radius: 12px 12px 0 0;
+      transition: height 320ms ease;
+    }
+
+    .salary-bar.average {
+      background: linear-gradient(180deg, #9aa8b2, #5d6a75);
+    }
+
+    .salary-bar.result {
+      background: linear-gradient(180deg, #e2aa2b, #c6472b);
+    }
+
+    .salary-bar-label {
+      display: grid;
+      gap: 3px;
       color: var(--text);
-      font-size: 15px;
-      line-height: 1.4;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    .salary-bar-label strong {
+      color: var(--ink);
+      font-size: 20px;
+    }
+
+    .salary-chart-note {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.45;
     }
 
     .controls {
@@ -1519,7 +1526,7 @@
     <section class="module career-module" id="career-game">
       <div class="module-content">
         <span class="eyebrow"><span class="eyebrow-num">17</span>職涯選擇</span>
-        <h2>選一條路，檢核自己的課程能力，再翻開未來薪資卡。</h2>
+        <h2>選一條路，檢核自己的課程能力，再比較未來薪資。</h2>
         <p class="lead">依據汽車科跨領域職涯發展圖解與職涯心智圖，把高職階段的課程能力接到未來工作選擇。</p>
       </div>
       <div class="career-board" aria-label="互動式職涯選擇路徑圖">
@@ -1529,7 +1536,7 @@
             <div class="career-node active" data-career-step="start"><strong>起點</strong><span>國中畢業，選擇高職汽車科</span></div>
             <div class="career-node" data-career-step="courses"><strong>能力檢核</strong><span>勾選高職階段課程能力</span></div>
             <div class="career-node" data-career-step="career"><strong>職涯終點</strong><span>解鎖工作方向與任務</span></div>
-            <div class="career-node" data-career-step="salary"><strong>薪資卡</strong><span>點擊翻開薪資水平</span></div>
+            <div class="career-node" data-career-step="salary"><strong>薪資比較</strong><span>查看平均與估算薪資</span></div>
           </div>
           <div class="career-panel">
             <h3 id="career-title"></h3>
@@ -1544,15 +1551,20 @@
                 <strong id="career-end-title"></strong>
                 <span id="career-end-desc"></span>
               </div>
-              <button class="salary-card" id="salary-card" type="button" aria-label="翻開薪資水平區間" aria-pressed="false">
-                <span class="salary-card-inner">
-                  <span class="salary-face salary-front">薪資水平區間<br>點我翻開</span>
-                  <span class="salary-face salary-back">
-                    <strong id="salary-range"></strong>
-                    <span id="salary-note"></span>
-                  </span>
-                </span>
-              </button>
+              <div class="salary-chart" id="salary-chart" aria-label="薪資水平比較圖">
+                <strong class="salary-chart-title">薪資水平比較</strong>
+                <div class="salary-bars" aria-hidden="true">
+                  <div class="salary-bar-item">
+                    <div class="salary-bar-track"><div class="salary-bar average" id="average-salary-bar"></div></div>
+                    <span class="salary-bar-label">平均受薪<strong>3.8萬</strong></span>
+                  </div>
+                  <div class="salary-bar-item">
+                    <div class="salary-bar-track"><div class="salary-bar result" id="result-salary-bar"></div></div>
+                    <span class="salary-bar-label">你的估算<strong id="salary-range"></strong></span>
+                  </div>
+                </div>
+                <span class="salary-chart-note" id="salary-note"></span>
+              </div>
             </div>
           </div>
         </div>
@@ -1690,10 +1702,13 @@
     const careerResult = document.querySelector("#career-result");
     const careerEndTitle = document.querySelector("#career-end-title");
     const careerEndDesc = document.querySelector("#career-end-desc");
-    const salaryCard = document.querySelector("#salary-card");
+    const salaryChart = document.querySelector("#salary-chart");
+    const averageSalaryBar = document.querySelector("#average-salary-bar");
+    const resultSalaryBar = document.querySelector("#result-salary-bar");
     const salaryRange = document.querySelector("#salary-range");
     const salaryNote = document.querySelector("#salary-note");
     const careerNodes = Array.from(document.querySelectorAll("[data-career-step]"));
+    const averageSalary = 38000;
     let activeCareer = careerData[0];
 
     function setCareerStep(step) {
@@ -1724,16 +1739,21 @@
 
     function updateSalaryCard() {
       const info = currentSalaryInfo();
+      const chartMax = Math.max(activeCareer.maxSalary, averageSalary);
+      averageSalaryBar.style.height = `${Math.max(8, (averageSalary / chartMax) * 100)}%`;
+
       if (info.checked < 3) {
         salaryRange.textContent = "尚未達標";
         salaryNote.textContent = `${activeCareer.baseNote} 目前勾選 ${info.checked} / ${activeCareer.courses.length} 項能力，至少需要 3 項才能進入職涯終點。`;
-        salaryCard.setAttribute("aria-label", "翻開薪資水平區間，目前尚未達標");
+        resultSalaryBar.style.height = "8%";
+        salaryChart.setAttribute("aria-label", "薪資水平比較圖，目前尚未達標，平均受薪 3.8 萬");
         return;
       }
 
-      salaryRange.textContent = `月薪 ${formatSalary(info.salary)}`;
-      salaryNote.textContent = `${activeCareer.baseNote} 滿 5 項最高月薪 ${formatSalary(activeCareer.maxSalary)}；目前勾選 ${info.checked} / ${activeCareer.courses.length} 項能力，少 ${info.missing} 項，扣薪 ${formatSalary(info.deduction)}。`;
-      salaryCard.setAttribute("aria-label", `翻開薪資水平區間，目前估算月薪 ${formatSalary(info.salary)}`);
+      salaryRange.textContent = formatSalary(info.salary);
+      resultSalaryBar.style.height = `${Math.max(8, (info.salary / chartMax) * 100)}%`;
+      salaryNote.textContent = `平均受薪 3.8 萬；目前勾選 ${info.checked} / ${activeCareer.courses.length} 項能力，估算月薪 ${formatSalary(info.salary)}。滿 5 項最高 ${formatSalary(activeCareer.maxSalary)}，少 ${info.missing} 項扣薪 ${formatSalary(info.deduction)}。`;
+      salaryChart.setAttribute("aria-label", `薪資水平比較圖，平均受薪 3.8 萬，目前估算月薪 ${formatSalary(info.salary)}`);
     }
 
     function updateCareerGate() {
@@ -1754,8 +1774,6 @@
       careerEndTitle.textContent = career.endpoint;
       careerEndDesc.textContent = career.endpointDesc;
       careerResult.classList.remove("open");
-      salaryCard.classList.remove("flipped");
-      salaryCard.setAttribute("aria-pressed", "false");
       setCareerStep("start");
 
       careerSelector.querySelectorAll(".career-choice").forEach((button) => {
@@ -1795,16 +1813,10 @@
     careerNext.addEventListener("click", () => {
       if (checkedCourseCount() < 3) return;
       careerResult.classList.add("open");
-      setCareerStep("career");
-      const info = currentSalaryInfo();
-      careerHint.textContent = `已抵達職涯終點，點擊薪資卡查看 ${formatSalary(info.salary)} 的估算月薪。`;
-      careerResult.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    });
-
-    salaryCard.addEventListener("click", () => {
-      salaryCard.classList.toggle("flipped");
-      salaryCard.setAttribute("aria-pressed", salaryCard.classList.contains("flipped") ? "true" : "false");
       setCareerStep("salary");
+      const info = currentSalaryInfo();
+      careerHint.textContent = `已抵達職涯終點，右側長條圖顯示 ${formatSalary(info.salary)} 的估算月薪。`;
+      careerResult.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
 
     renderCareer(activeCareer);
