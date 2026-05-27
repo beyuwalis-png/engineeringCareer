@@ -798,6 +798,8 @@
     }
 
     .career-board {
+      position: relative;
+      z-index: 3;
       width: min(1180px, calc(100% - 24px));
       display: grid;
       grid-template-columns: 290px minmax(0, 1fr);
@@ -940,6 +942,8 @@
     }
 
     .course-check {
+      position: relative;
+      z-index: 4;
       display: flex;
       gap: 10px;
       align-items: flex-start;
@@ -949,15 +953,44 @@
       background: #fff;
       border: 1px solid rgba(17, 24, 32, 0.08);
       color: var(--text);
+      font: inherit;
       font-weight: 800;
       line-height: 1.35;
+      text-align: left;
+      cursor: pointer;
+      transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
     }
 
-    .course-check input {
+    .course-check::before {
+      content: "";
+      flex: 0 0 auto;
       width: 20px;
       height: 20px;
       margin-top: 2px;
-      accent-color: var(--blue);
+      border-radius: 5px;
+      border: 2px solid var(--blue);
+      background: #fff;
+    }
+
+    .course-check.active {
+      background: #e8f5f7;
+      border-color: var(--blue);
+      transform: translateY(-1px);
+    }
+
+    .course-check.active::before {
+      content: "✓";
+      display: grid;
+      place-items: center;
+      background: var(--blue);
+      color: #fff;
+      font-size: 17px;
+      line-height: 1;
+    }
+
+    .course-check:focus-visible {
+      outline: 4px solid var(--gold);
+      outline-offset: 3px;
     }
 
     .career-actions {
@@ -1673,8 +1706,7 @@
     }
 
     function checkedCourseCount() {
-      const checks = Array.from(courseChecklist.querySelectorAll("input"));
-      return checks.filter((check) => check.checked).length;
+      return courseChecklist.querySelectorAll(".course-check.active").length;
     }
 
     function formatSalary(amount) {
@@ -1732,24 +1764,20 @@
 
       courseChecklist.innerHTML = "";
       career.courses.forEach((course, index) => {
-        const label = document.createElement("label");
-        label.className = "course-check";
-        label.innerHTML = `<input type="checkbox" value="${course}"><span>${course}</span>`;
-        const checkbox = label.querySelector("input");
-        label.addEventListener("click", (event) => {
-          event.preventDefault();
-          checkbox.checked = !checkbox.checked;
+        const button = document.createElement("button");
+        button.className = "course-check";
+        button.type = "button";
+        button.dataset.course = course;
+        button.setAttribute("aria-pressed", "false");
+        button.innerHTML = `<span>${course}</span>`;
+        button.addEventListener("click", () => {
+          const selected = !button.classList.contains("active");
+          button.classList.toggle("active", selected);
+          button.setAttribute("aria-pressed", selected ? "true" : "false");
           updateCareerGate();
         });
-        checkbox.addEventListener("keydown", (event) => {
-          if (event.key === " ") {
-            event.preventDefault();
-            checkbox.checked = !checkbox.checked;
-            updateCareerGate();
-          }
-        });
-        courseChecklist.append(label);
-        if (index === 0) checkbox.focus({ preventScroll: true });
+        courseChecklist.append(button);
+        if (index === 0) button.focus({ preventScroll: true });
       });
       updateCareerGate();
     }
