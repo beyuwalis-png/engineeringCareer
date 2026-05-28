@@ -411,6 +411,12 @@
       line-height: 1.35;
     }
 
+    .stat-text .highlight-red {
+      color: var(--red);
+      font-size: 1.12em;
+      font-weight: 900;
+    }
+
     .photo-strip {
       position: relative;
       z-index: 1;
@@ -461,6 +467,13 @@
       font-size: 17px;
       line-height: 1.45;
       padding: 0 22px;
+    }
+
+    .mini-card .highlight-red {
+      color: var(--red);
+      font-size: 1.12em;
+      font-weight: 900;
+      padding: 0;
     }
 
     .mini-card img {
@@ -697,6 +710,139 @@
       font-weight: 900;
       text-align: left;
       background: linear-gradient(transparent, rgba(17, 24, 32, 0.82));
+    }
+
+    .scroll-gallery {
+      position: relative;
+      width: min(1060px, calc(100% - 24px));
+      height: clamp(430px, 72vh, 720px);
+      display: block;
+      margin: 0 auto 18px;
+      padding: 0;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #101820;
+      box-shadow: var(--shadow);
+      touch-action: pan-y;
+      perspective: 1200px;
+    }
+
+    .scroll-gallery figure,
+    .scroll-gallery .wide-tile,
+    .scroll-gallery .tall {
+      position: absolute;
+      inset: 0;
+      min-height: 0;
+      grid-column: auto;
+      grid-row: auto;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(28px) scale(0.98);
+      transform-origin: center center;
+      transition: opacity 560ms ease, transform 760ms cubic-bezier(0.2, 0.72, 0.2, 1);
+    }
+
+    .scroll-gallery figure.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    .scroll-gallery figure.leaving-next {
+      animation: photoLeaveNext 760ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
+    }
+
+    .scroll-gallery figure.leaving-prev {
+      animation: photoLeavePrev 760ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
+    }
+
+    .scroll-gallery[data-direction="next"] figure.active {
+      animation: photoFlipNext 760ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
+    }
+
+    .scroll-gallery[data-direction="prev"] figure.active {
+      animation: photoFlipPrev 760ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
+    }
+
+    .scroll-gallery figure img {
+      height: 100%;
+    }
+
+    .gallery-nav {
+      position: absolute;
+      inset: auto 18px 18px auto;
+      z-index: 4;
+      display: flex;
+      gap: 8px;
+      padding: 8px;
+      border-radius: 999px;
+      background: rgba(17, 24, 32, 0.58);
+      backdrop-filter: blur(10px);
+    }
+
+    .gallery-nav button {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .gallery-nav button:hover,
+    .gallery-nav button:focus-visible {
+      background: var(--blue);
+      outline: none;
+    }
+
+    @keyframes photoFlipNext {
+      from {
+        opacity: 0;
+        transform: translateY(92px) rotateX(-18deg) scale(0.94);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0) scale(1);
+      }
+    }
+
+    @keyframes photoFlipPrev {
+      from {
+        opacity: 0;
+        transform: translateY(-92px) rotateX(18deg) scale(0.94);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0) scale(1);
+      }
+    }
+
+    @keyframes photoLeaveNext {
+      from {
+        opacity: 1;
+        transform: translateY(0) rotateX(0) scale(1);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(-92px) rotateX(18deg) scale(0.94);
+      }
+    }
+
+    @keyframes photoLeavePrev {
+      from {
+        opacity: 1;
+        transform: translateY(0) rotateX(0) scale(1);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(92px) rotateX(-18deg) scale(0.94);
+      }
     }
 
     .lightbox {
@@ -1288,10 +1434,6 @@
         <span class="eyebrow"><span class="eyebrow-num">01</span>首頁｜技職達人</span>
         <h1>從車輛現場，開出自己的專業路。</h1>
         <p class="lead">台東專科學校附設高職部汽車科，把引擎、電控、板噴、實習與競賽訓練做成一條清楚的技職路徑。</p>
-        <div class="links">
-          <a class="link-pill" href="#practice">看實習現場</a>
-          <a class="link-pill" href="#wins">看競賽成果</a>
-        </div>
       </div>
     </section>
 
@@ -1309,22 +1451,22 @@
       <section class="module green" id="teachers">
         <div class="module-content">
           <span class="eyebrow"><span class="eyebrow-num">03</span>學生目標</span>
-          <h2>三年一貫的學習節奏，讓每個階段都有清楚任務。</h2>
+          <h2>三年一貫的學習節奏，每個階段都有清楚任務。</h2>
           <div class="text-stack">
             <div class="mini-card">
               <img class="portrait" src="assets/gallery/grade-1-motorcycle.jpg" alt="一年級學生進行機車修護技能練習">
               <strong>一年級</strong>
-              <span>以機車修護丙級為目標，建立工具使用、基本拆裝與安全觀念。</span>
+              <span>以<span class="highlight-red">機車修護丙級</span>為目標，建立工具使用、基本拆裝與安全觀念。</span>
             </div>
             <div class="mini-card">
               <img src="assets/gallery/grade-2-auto.jpg" alt="二年級學生進行汽車修護丙級檢定練習">
               <strong>二年級</strong>
-              <span>以汽車修護丙級為目標，強化引擎、底盤、電系與檢修流程。</span>
+              <span>以<span class="highlight-red">汽車修護丙級</span>為目標，強化引擎、底盤、電系與檢修流程。</span>
             </div>
             <div class="mini-card">
               <img class="portrait" src="assets/gallery/grade-3-project.jpg" alt="三年級學生進行專題實作討論">
               <strong>三年級</strong>
-              <span>完成專題實作，整合診斷、設計、製作、紀錄與成果發表能力。</span>
+              <span>完成<span class="highlight-red">專題實作</span>，整合診斷、設計、製作、紀錄與成果發表能力。</span>
             </div>
           </div>
         </div>
@@ -1337,9 +1479,9 @@
         <h2>競賽與專題，讓能力被看見。</h2>
         <p class="lead">學生從練習、修正、再練習中累積穩定度，也把成果轉化成升學與職涯的證明。</p>
         <div class="stats">
-          <div class="stat"><strong>54</strong><span class="stat-text">全國技能競賽南區分區賽汽車板金第3名</span></div>
-          <div class="stat"><strong>53</strong><span class="stat-text">汽車板金第1名、汽車噴漆第5名</span></div>
-          <div class="stat"><strong>4</strong><span class="stat-text">動力機械群科專題競賽多次獲獎</span></div>
+          <div class="stat"><strong>54</strong><span class="stat-text"><span class="highlight-red">全國技能競賽南區分區賽</span>汽車板金第3名</span></div>
+          <div class="stat"><strong>53</strong><span class="stat-text"><span class="highlight-red">汽車板金</span>第1名、<span class="highlight-red">汽車噴漆</span>第5名</span></div>
+          <div class="stat"><strong>4</strong><span class="stat-text">動力機械群科<span class="highlight-red">專題競賽</span>多次獲獎</span></div>
         </div>
       </div>
       <div class="photo-strip" aria-label="競賽練習照片">
@@ -1354,8 +1496,7 @@
         <div class="module-content">
           <span class="eyebrow"><span class="eyebrow-num">05</span>升學就業</span>
           <h2>把作品、證照與實習紀錄，整理成自己的能力檔案。</h2>
-          <p class="lead">參考資料列出錄取高雄科技大學、虎尾科技大學、海軍軍官學校等方向，也銜接 TOYOTA 東部汽車等車廠體系。</p>
-          <div class="links"><a class="link-pill" href="#practice">看場域學習</a></div>
+          <p class="lead">錄取高雄科技大學、虎尾科技大學、海軍軍官學校等方向，也銜接 TOYOTA 東部汽車等車廠體系。</p>
         </div>
       </section>
 
@@ -1364,7 +1505,6 @@
           <span class="eyebrow"><span class="eyebrow-num">06</span>業界實習</span>
           <h2>走進車廠，把課堂變成現場判斷。</h2>
           <p class="lead">實習合作包含 TOYOTA 東部汽車、NISSAN 連誠汽車、匯豐汽車、福斯國源汽車等。</p>
-          <div class="links"><a class="link-pill" href="#gallery">看照片牆</a></div>
         </div>
         <div class="module-visual visual-practice" aria-hidden="true"></div>
       </section>
@@ -1375,7 +1515,7 @@
         <span class="eyebrow"><span class="eyebrow-num">07</span>現場照片</span>
         <h2>實習與練習，不是口號，是每天看得見的手感。</h2>
       </div>
-      <div class="gallery" aria-label="業界實習與競賽練習照片牆">
+      <div class="gallery scroll-gallery" aria-label="業界實習與競賽練習照片牆">
         <figure class="wide-tile"><img src="assets/gallery/internship-01.jpg" alt="學生在車輛引擎室旁學習"><figcaption>車廠現場學習</figcaption></figure>
         <figure><img src="assets/gallery/internship-02.jpg" alt="學生觀察車輛維修作業"><figcaption>實務觀察</figcaption></figure>
         <figure><img src="assets/gallery/internship-04.jpg" alt="學生進行車身作業練習"><figcaption>保養檢修流程</figcaption></figure>
@@ -1393,7 +1533,7 @@
       <section class="module color" id="labs">
         <div class="module-content">
           <span class="eyebrow"><span class="eyebrow-num">08</span>檢定設備</span>
-          <h2>讓學生從基礎練習，到專業檢定都有場地支撐。</h2>
+          <h2>從基礎練習，到專業檢定都有場地支撐。</h2>
           <p class="lead">汽車修護丙級、機車修護丙級、汽車修護乙級檢定場地，搭配 3D 定位、示波器、診斷儀與板噴設備。</p>
         </div>
         <div class="module-visual visual-labs" aria-hidden="true"></div>
@@ -1412,7 +1552,7 @@
     <section class="module ev-module" id="green-ev-dev">
       <div class="module-content">
         <span class="eyebrow"><span class="eyebrow-num">10</span>綠能車課程開發</span>
-        <h2>從三電系統開始，看懂電動車如何被驅動。</h2>
+        <h2>三電系統開始，看懂電動車如何被驅動。</h2>
         <p class="lead">電動車課程先建立「電池、電機、電控」三電架構，讓學生理解能量如何儲存、輸出、控制，最後轉換成車輛行駛與診斷判斷。</p>
       </div>
       <div class="ev-showcase single">
@@ -1483,7 +1623,7 @@
         <h2>企業合作活動，把業界經驗帶進課堂。</h2>
         <p class="lead">透過實車講座、技術示範與現場交流，學生能在校內接觸產業正在使用的工具、流程與標準。</p>
       </div>
-      <div class="gallery" aria-label="企業合作業師教學活動照片牆">
+      <div class="gallery scroll-gallery" aria-label="企業合作業師教學活動照片牆">
         <figure class="wide-tile"><img src="assets/gallery/industry-teacher-01.jpg" alt="MG 汽車進入校園作為業師教學實車教材"><figcaption>MG 實車展示</figcaption></figure>
         <figure><img src="assets/gallery/industry-teacher-02.jpg" alt="業師進行 MG 汽車技術講座"><figcaption>MG 汽車講座</figcaption></figure>
         <figure><img src="assets/gallery/industry-teacher-03.jpg" alt="學生參與 MG 汽車講座與技術交流"><figcaption>MG 技術交流</figcaption></figure>
@@ -1578,7 +1718,6 @@
         <p class="lead">你會從工具、零件、儀器與車輛開始，學會拆解問題、驗證答案，最後把技術變成作品、證照、實習表現與未來工作能力。</p>
         <div class="links">
           <a class="link-pill" href="#hero">回到首頁</a>
-          <a class="link-pill" href="#gallery">再看照片</a>
         </div>
       </div>
       <div class="module-visual visual-join" aria-hidden="true"></div>
@@ -1848,6 +1987,61 @@
           event.preventDefault();
           openLightbox(figure);
         }
+      });
+    });
+
+    document.querySelectorAll(".scroll-gallery").forEach((gallery) => {
+      const figures = Array.from(gallery.querySelectorAll("figure"));
+      let activeIndex = 0;
+      let wheelLocked = false;
+
+      const nav = document.createElement("div");
+      nav.className = "gallery-nav";
+      nav.innerHTML = `
+        <button type="button" aria-label="上一張照片">‹</button>
+        <button type="button" aria-label="下一張照片">›</button>
+      `;
+      gallery.append(nav);
+
+      const [prevButton, nextButton] = nav.querySelectorAll("button");
+
+      function showPhoto(nextIndex, direction = "next") {
+        const previousIndex = activeIndex;
+        activeIndex = (nextIndex + figures.length) % figures.length;
+        if (previousIndex === activeIndex) return;
+
+        gallery.dataset.direction = direction;
+        figures.forEach((figure, index) => {
+          const active = index === activeIndex;
+          figure.classList.remove("leaving-next", "leaving-prev");
+          figure.classList.toggle("active", active);
+          figure.tabIndex = active ? 0 : -1;
+        });
+
+        const previousFigure = figures[previousIndex];
+        previousFigure.classList.add(direction === "next" ? "leaving-next" : "leaving-prev");
+        window.setTimeout(() => {
+          previousFigure.classList.remove("leaving-next", "leaving-prev");
+        }, 780);
+      }
+
+      prevButton.addEventListener("click", () => showPhoto(activeIndex - 1, "prev"));
+      nextButton.addEventListener("click", () => showPhoto(activeIndex + 1, "next"));
+
+      gallery.addEventListener("wheel", (event) => {
+        event.preventDefault();
+        if (wheelLocked || Math.abs(event.deltaY) < 8) return;
+        wheelLocked = true;
+        showPhoto(activeIndex + (event.deltaY > 0 ? 1 : -1), event.deltaY > 0 ? "next" : "prev");
+        window.setTimeout(() => {
+          wheelLocked = false;
+        }, 780);
+      }, { passive: false });
+
+      figures[0].classList.add("active");
+      figures[0].tabIndex = 0;
+      figures.slice(1).forEach((figure) => {
+        figure.tabIndex = -1;
       });
     });
 
